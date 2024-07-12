@@ -13,12 +13,16 @@ class User
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $public_key = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $key = null;
+    private ?string $private_key = null;
 
     public function __construct() {
-        $this->key = bin2hex(random_bytes(32));
+        $this->public_key = bin2hex(random_bytes(32));
+        $this->private_key = password_hash($this->public_key, PASSWORD_DEFAULT);
     }
 
     public function getId(): ?int
@@ -26,14 +30,26 @@ class User
         return $this->id;
     }
 
-    public function getKey(): ?string
+    public function getPublicKey(): ?string
     {
-        return $this->key;
+        return $this->public_key;
     }
 
-    public function setKey(string $key): static
+    public function setPublicKey(string $key): static
     {
-        $this->key = $key;
+        $this->public_key = $key;
+
+        return $this;
+    }
+
+    public function getPrivateKey(): ?string
+    {
+        return $this->private_key;
+    }
+
+    public function setPrivateKey(): static
+    {
+        $this->private_key = password_hash($this->public_key, PASSWORD_DEFAULT);;
 
         return $this;
     }

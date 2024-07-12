@@ -209,9 +209,13 @@ class PuzzleGenerator implements CaptchaGeneratorInterface
 
     public function connect(string $user_key): bool
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['key' => $user_key]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['public_key' => $user_key]);
 
         if (!$user) return false;
+         
+        $authorisation = password_verify($user_key, $user->getPrivateKey());
+
+        if (!$authorisation) return false;
 
         return true;
     }
