@@ -153,7 +153,7 @@ class PuzzleImageGenerator implements CaptchaImageGeneratorInterface
 
         // Generate the positions for the pieces
         // Easy way
-        $piecesPositionsInImages = ['bottom-right', 'top-left', 'top-right'];
+        $piecesPositionsInImages = ['top-left', 'top-right', 'bottom-right', ];
 
         foreach($pieces as $index => $piece) {
             $position = $positions[$index];
@@ -168,92 +168,4 @@ class PuzzleImageGenerator implements CaptchaImageGeneratorInterface
         
         return $image->response('webp');
     }
-
-    // public function generateImageBis(string $key): Response {
-    //     $puzzle = $this->puzzle->getPuzzle($key);
-    //     $solutions = $puzzle['solutions'];
-
-    //     if (!$puzzle) {
-    //         return new Response('No position found', 404);
-    //     }
-
-    //     // If the key is already verified, we need to generate a new puzzle to avoid brute force attack
-    //     if (array_key_exists('verified', $puzzle)) {
-    //         $this->puzzle->generatePuzzle($key);
-    //         $puzzle = $this->puzzle->getPuzzle($key);
-    //         $solutions = $puzzle['solutions'];
-    //     }
-
-    //     $backgroundPath = $this->chosingAPic();
-
-    //     $manager = new ImageManager(['driver' => 'gd']);
-    //     $image = $manager->make($backgroundPath);
-    //     $image->resize(PuzzleGenerator::WIDTH, PuzzleGenerator::HEIGHT);
-    //     $pieces = $this->getPieces(PuzzleGenerator::PIECES_NUMBER);
-
-    //     $holes = [];
-        
-    //     foreach ($pieces as $index => $piece) {
-    //         $piece = $manager->make($piece);
-    //         $piece->resize(PuzzleGenerator::PIECE_WIDTH, PuzzleGenerator::PIECE_HEIGHT, function ($constraint) {
-    //             $constraint->aspectRatio();
-    //         });
-    //         if ($piece->height() < PuzzleGenerator::PIECE_HEIGHT) {
-    //             $piece = $this->resizeNecessary($piece, 'height');
-    //         } else if ($piece->width() < PuzzleGenerator::PIECE_WIDTH) {
-    //             $piece = $this->resizeNecessary($piece, 'width');
-    //         }
-            
-    //         $hole = clone $piece;
-    //         $hole->opacity(80);
-
-    //         // In case we want to add an halo to the hole
-    //         // $halo = $manager->make($halos[$index]);
-    //         // $halo->fit(PuzzleChallenge::PIECE_WIDTH, PuzzleChallenge::PIECE_HEIGHT);
-    //         // $hole->insert($halo, 'top-left', 0, 0);
-
-    //         $position = $solutions[$index]['position'];
-
-    //         // create the piece with the image in it
-    //         $piece->insert($image, 'top-left', -$position[0], -$position[1])
-    //             // and then crop it to the piece size
-    //               ->mask($hole, true);
-
-    //         $holes[] = $hole;
-    //         $pieces[$index] = $piece;
-    //     }
-
-    //     // $image
-    //     //     ->resizeCanvas(
-    //     //         $params['pieceWidth'],
-    //     //         0,
-    //     //         'left',
-    //     //         true,
-    //     //         'rgba(0, 0, 0, 0)'
-    //     //     )
-    //     //     ->resizeCanvas(
-    //     //         $params['pieceWidth'],
-    //     //         0,
-    //     //         'right',
-    //     //         true,
-    //     //         'rgba(0, 0, 0, 0)'
-    //     //     );
-
-    //     // Generate the positions for the pieces
-    //     // Easy way
-    //     $piecesPositionsInImages = ['bottom-right', 'top-left', 'top-right'];
-
-    //     foreach($pieces as $index => $piece) {
-    //         $position = $solutions[$index]['position'];
-    //         $hole = $holes[$index];
-
-    //         $randomPiecePosition = $piecesPositionsInImages[$index];
-    //         $image
-    //             ->insert($piece, $randomPiecePosition)
-    //             ->insert($hole->opacity(80), 'top-left', $position[0] + PuzzleGenerator::PIECE_WIDTH, $position[1]);
-    //     }
-        
-    //     return $image->response('webp');
-    // }
-
 }

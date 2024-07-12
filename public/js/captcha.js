@@ -53,9 +53,9 @@ class PuzzleCaptcha extends HTMLElement
         
         let isDragging = false;
         const piecesImagePostition = [
+            'top left',
             'top right',
             'bottom right',
-            'top left',
         ]
 
         const piecesContainer = this.querySelector('.captcha-pieces-container');
@@ -86,14 +86,14 @@ class PuzzleCaptcha extends HTMLElement
 
                 let input;
                 switch(piece.id) {
-                    case 'piece-2':
-                        input = Array.from(inputs).find(input => input.name.includes('answer_1'));
-                        break;
                     case 'piece-3':
+                        input = Array.from(inputs).find(input => input.name.includes('answer_3'));
+                        break;
+                    case 'piece-2':
                         input = Array.from(inputs).find(input => input.name.includes('answer_2'));
                         break;
                     case 'piece-1':
-                        input = Array.from(inputs).find(input => input.name.includes('answer_3'));
+                        input = Array.from(inputs).find(input => input.name.includes('answer_1'));
                     default:
                         break;
                 }
@@ -121,7 +121,6 @@ class PuzzleCaptcha extends HTMLElement
             } else if (puzzleBar === 'bottom') {
                 position = {x: rectPiece.x - containerDomrect.x, y: rectPiece.y};
             }
-
             piece.style.setProperty('background-position', `${piecesImagePostition[i]}`);
 
             piece.addEventListener('pointerdown', e => {
