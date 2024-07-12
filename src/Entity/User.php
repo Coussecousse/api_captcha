@@ -9,10 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`user`')]
 class User
 {
-
-    public function __contruct() {
-        $this->key = bin2hex(random_bytes(32));
-    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,6 +16,10 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $key = null;
+
+    public function __construct() {
+        $this->key = bin2hex(random_bytes(32));
+    }
 
     public function getId(): ?int
     {
