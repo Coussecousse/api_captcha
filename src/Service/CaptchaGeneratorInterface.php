@@ -30,4 +30,6 @@ interface CaptchaGeneratorInterface
 
 
     public function getParams(Puzzle $puzzle): JsonResponse;
+
+    public function connect(string $key): bool;
 }

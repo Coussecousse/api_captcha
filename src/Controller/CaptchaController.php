@@ -69,4 +69,16 @@ class CaptchaController extends AbstractController
 
         return $puzzleGenerator->verify($params['key'], $params['answers']);
     }
+
+    #[Route('/captcha/connect', name:'app_captcha_api_connect')]
+    public function connection(Request $request, PuzzleGenerator $puzzleGenerator) {
+
+        $user_key = $request->query->get('user_key');
+
+        $autorization = $puzzleGenerator->connect($user_key);
+
+        if (!$autorization) return new JsonResponse(['valid' => false]);
+        
+        return new JsonResponse(['valid' => true]);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Service\Puzzle;
 use App\Entity\Key;
 use App\Entity\Position;
 use App\Entity\Puzzle;
+use App\Entity\User;
 use App\Service\CaptchaGeneratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -204,5 +205,14 @@ class PuzzleGenerator implements CaptchaGeneratorInterface
         }
 
         return $positions;
+    }
+
+    public function connect(string $user_key): bool
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['key' => $user_key]);
+
+        if (!$user) return false;
+
+        return true;
     }
 }
