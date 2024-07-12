@@ -2,24 +2,6 @@ function clamp(n, min, max) {
     return Math.min(Math.max(n, min), max);
 }
 
-function randomNumberBetween(min, max) {
-    return Math.floor(Math.random() * (max-min + 1) + min);
-}
-
-function widthRangesForPieces(width, numberOfPieces, spaceBetweenPieces) {
-    let lastMinWidth = 0;
-    const ranges = [];
-    const imageDivision = (width - (spaceBetweenPieces * numberOfPieces)) / numberOfPieces;
-
-    for (let i = 0; i < numberOfPieces; i++) {
-        const nextWidth = lastMinWidth + imageDivision;
-        ranges.push([lastMinWidth, nextWidth]);
-        lastMinWidth = nextWidth + spaceBetweenPieces; 
-    }
-
-    return ranges;
-}
-
 class PuzzleCaptcha extends HTMLElement
 {
 
@@ -32,7 +14,6 @@ class PuzzleCaptcha extends HTMLElement
         const maxY = height - pieceHeight; 
         const numberOfPieces = parseInt(this.getAttribute('pieces-number')) || 1;
         const puzzleBar = this.getAttribute('puzzle-bar') || 'left';
-
 
         this.classList.add('captcha');
         if (puzzleBar === 'right' || puzzleBar === 'left') {
@@ -59,7 +40,10 @@ class PuzzleCaptcha extends HTMLElement
                 break;
         }
 
-        this.style.setProperty('--image', `url(${this.getAttribute('src')})`);
+        if (this.style.getPropertyValue('--image') === '') {
+            this.style.setProperty('--image', `url(${this.getAttribute('src')})`);
+        }
+
         this.style.setProperty('--width', `${width}px`);
         this.style.setProperty('--height', `${height}px`);
         this.style.setProperty('--pieceWidth', `${pieceWidth}px`);
@@ -161,4 +145,5 @@ class PuzzleCaptcha extends HTMLElement
     }
 }
 
-customElements.define('puzzle-captcha', PuzzleCaptcha)
+customElements.define('puzzle-captcha', PuzzleCaptcha);
+
