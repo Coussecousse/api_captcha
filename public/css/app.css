@@ -1,0 +1,89 @@
+
+/* Captcha */
+.captcha {
+	display: block;
+	position: relative;
+	margin: 0 auto;
+	border: 2px solid #D1D1D4;
+	touch-action: none;
+	display: flex;
+	/* width: var(--width);
+	height: var(--height);  */
+}
+
+.captcha.puzzle-bar-tb {
+	flex-direction: column;
+}
+
+.captcha-image {
+	background: var(--image) center no-repeat;
+	height: var(--height);
+	width: var(--width);
+}
+.puzzle-bar-lr .captcha-image {
+	flex: 1;
+}
+.piece-container {
+	display: block;
+	width: var(--pieceWidth);
+	height: var(--pieceHeight);
+}
+
+.captcha-pieces-container {
+	display: flex;
+	align-items: center;
+	/* justify-content: space-evenly; */
+	background-color: whitesmoke;
+}
+.puzzle-bar-tb .captcha-pieces-container {
+	height: calc(var(--pieceHeight));
+	width: 100%;
+}
+.puzzle-bar-lr .captcha-pieces-container {
+	flex-direction: column;
+	height: 100%;
+	width: calc(var(--pieceWidth));
+}
+
+.puzzle-bar-left .captcha-pieces-container, 
+.puzzle-bar-top .captcha-pieces-container{
+	order: 1;
+}
+.puzzle-bar-left .captcha-image, 
+.puzzle-bar-top .captcha-image {
+	order: 2;
+}
+
+.captcha-piece {
+	/* position: absolute; */
+	top: 0;
+	left: 0;
+	width: var(--pieceWidth);
+	height: var(--pieceHeight);
+	background: var(--image);
+}
+	
+.captcha-piece::after {
+	content: '';
+	position: absolute;
+	width: calc(var(--pieceWidth));
+	height: calc(var(--pieceHeight));
+	
+	transition: .3s
+}
+
+#piece-1::after {
+	background: url(http://127.0.0.1:8000/images/pieces/piece_1_halo.png) center/contain no-repeat;
+}
+
+#piece-2::after {
+	background: url(http://127.0.0.1:8000/images/pieces/piece_3_halo.png) center/contain no-repeat;
+}
+
+#piece-3::after {
+	background: url(http://127.0.0.1:8000/images/pieces/piece_2_halo.png) center/contain no-repeat;
+}
+
+.captcha-piece:not(.piece-waiting-interaction):not(.is-moving)::after {
+    opacity: 0;
+}
